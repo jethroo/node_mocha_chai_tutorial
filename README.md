@@ -40,3 +40,13 @@ Error: Cannot find module './../../src/cart-summary'
     at startup (bootstrap_node.js:139:9)
     at bootstrap_node.js:533:3
 ```
+
+fix: create a minimal CartSummary module 
+
+### Mocha default test folder is assumed in test not tests
+
+fix: rename to default test (without the 's')
+
+### Mocha should be part of the package as development dependency
+
+fix: install mocha via `npm install --save-dev mocha`
