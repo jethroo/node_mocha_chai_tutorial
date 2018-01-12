@@ -49,4 +49,23 @@ fix: rename to default test (without the 's')
 
 ### Mocha should be part of the package as development dependency
 
-fix: install mocha via `npm install --save-dev mocha`
+fix: install mocha via `npm install --save-dev mocha
+
+### Module methods should be in its on describe block
+
+Nest methods in their own describe block will make the output way
+more readable. One will see the method specific tests due to the
+output indentation. 
+
+fix: add a new describe block for each method
+
+```javascript
+describe('CartSummary', function() {
+  describe('getSubtotal()', function() {
+  });
+
+describe('anotherMethod()', function() {
+
+  });
+});
+```
