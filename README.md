@@ -1,6 +1,11 @@
 # node_mocha_chai_tutorial
 
-taking a look into mocha and chai following a tutorial by [David Tang](https://www.codementor.io/davidtang/unit-testing-and-tdd-in-node-js-part-1-8t714s877)
+taking a look into mocha and chai following a tutorial by David Tang
+
+✅ [Part 1](https://www.codementor.io/davidtang/unit-testing-and-tdd-in-node-js-part-1-8t714s877)
+
+❌ [Part 2](https://www.codementor.io/nodejs/tutorial/unit-testing-tdd-node-js-nockjs-part-2)
+
 
 ## stumbling blocks
 
@@ -78,15 +83,23 @@ TypeError: stub(obj, 'meth', fn) has been removed, see documentation
 
 fix: 
 
-use new `callsFake`
+use new `callsFake` and call restore on the stub object itself
 
 ```javascript
+var calculate_stub;
+
 beforeEach(function() {
-  sinon.stub(Tax, 'calculate').callsFake(function(subtotal, state, done) {
+  calculate_stub = sinon.stub(Tax, 'calculate').callsFake(function(subtotal, state, done) {
     setTimeout(function() {
       done({ amount: 30 });
     });
   }, 0);
 });
+
+afterEach(function() {
+  calculate_stub.restore();
+});
+
 ```
+
 

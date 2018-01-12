@@ -23,8 +23,10 @@ describe('CartSummary', function() {
   });
 
   describe('getTax()', function() {
+    var calculate_stub;
+
     beforeEach(function() {
-      sinon.stub(Tax, 'calculate').callsFake(function(subtotal, state, done) {
+      calculate_stub = sinon.stub(Tax, 'calculate').callsFake(function(subtotal, state, done) {
         setTimeout(function() {
           done({ amount: 30 });
         });
@@ -32,7 +34,7 @@ describe('CartSummary', function() {
     });
 
     afterEach(function() {
-      Tax.calculate.restore();
+      calculate_stub.restore();
     });
 
     it('should call the callback with the tax amount', function() {
@@ -44,6 +46,8 @@ describe('CartSummary', function() {
 
       cartSummary.getTax('NY', function(taxAmount) {
         expect(taxAmount).to.equal(30);
+        expect(Tax.calculate.getCall(0).args[0]).to.equal(300);
+        expect(Tax.calculate.getCall(0).args[1]).to.equal('NY');
         done();
       });
     });
