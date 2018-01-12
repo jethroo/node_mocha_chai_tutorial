@@ -51,7 +51,7 @@ fix: rename to default test (without the 's')
 
 fix: install mocha via `npm install --save-dev mocha
 
-### Module methods should be in its on describe block
+### Module methods should be in their on describe block
 
 Nest methods in their own describe block will make the output way
 more readable. One will see the method specific tests due to the
@@ -64,8 +64,29 @@ describe('CartSummary', function() {
   describe('getSubtotal()', function() {
   });
 
-describe('anotherMethod()', function() {
-
+  describe('anotherMethod()', function() {
   });
 });
 ```
+
+### Sinon stub method signature change
+
+```
+"before each" hook for "should call the callback with the tax amount":
+TypeError: stub(obj, 'meth', fn) has been removed, see documentation
+```
+
+fix: 
+
+use new `callsFake`
+
+```javascript
+beforeEach(function() {
+  sinon.stub(Tax, 'calculate').callsFake(function(subtotal, state, done) {
+    setTimeout(function() {
+      done({ amount: 30 });
+    });
+  }, 0);
+});
+```
+
